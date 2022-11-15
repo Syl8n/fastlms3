@@ -11,13 +11,20 @@
         .detail table th, .detail table td {
             border:solid 1px #000;
         }
-
+        .detail .login-history {
+            margin-top: 20px;
+        }
+        .detail .login-history .center-col{
+            text-align: center;
+        }
+        .detail .login-history .left-col{
+            padding-left: 10px;
+        }
     </style>
 </head>
 <body>
     <div th:replace="/fragments/layout.html :: fragment-admin-body-menu"></div>
     <h1>관리자 회원 관리 - 회원 상세 정보</h1>
-
 
     <div class="detail" >
 
@@ -101,6 +108,24 @@
 
         </div>
 
+        <table class="login-history">
+            <thead>
+                <tr>
+                    <th>NO</th>
+                    <th>로그인 일자</th>
+                    <th>접속 IP</th>
+                    <th>접속 UserAgent</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="x : ${history}">
+                    <td class="center-col" th:text="${x.seq}"></td>
+                    <td class="left-col" th:text="${x.getLoginDtText}"></td>
+                    <td class="left-col" th:text="${x.ip}"></td>
+                    <td class="left-col" th:text="${x.userAgent}"></td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
 

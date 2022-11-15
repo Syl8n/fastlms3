@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-public class LoginHistory {
+public class LoginHistory implements Comparable<LoginHistory>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -25,4 +25,14 @@ public class LoginHistory {
 
     String userAgent;
     String ip;
+
+    @Override
+    public int compareTo(LoginHistory a) {
+        if(this.loginDt.isBefore(a.loginDt)){
+            return 1;
+        } else if(this.loginDt.isAfter(a.loginDt)){
+            return -1;
+        }
+        return 0;
+    }
 }

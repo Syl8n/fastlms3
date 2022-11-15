@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -18,5 +19,9 @@ public class LoginHistoryService {
                 .userAgent(userAgent)
                 .ip(ip)
                 .build());
+    }
+
+    public List<LoginHistoryDto> getHistoryByUserId(String userId) {
+        return loginHistoryRepository.findByLoginId(userId).map(LoginHistoryDto::of).orElse(null);
     }
 }
