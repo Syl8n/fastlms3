@@ -267,6 +267,20 @@ public class MemberServiceImpl implements MemberService {
         
         return new ServiceResult();
     }
+
+    private void validate(Member member){
+        if (Member.MEMBER_STATUS_REQ.equals(member.getUserStatus())) {
+            throw new MemberNotEmailAuthException("이메일 활성화 이후에 로그인을 해주세요.");
+        }
+
+        if (Member.MEMBER_STATUS_STOP.equals(member.getUserStatus())) {
+            throw new MemberStopUserException("정지된 회원 입니다.");
+        }
+
+        if (Member.MEMBER_STATUS_WITHDRAW.equals(member.getUserStatus())) {
+            throw new MemberStopUserException("탈퇴된 회원 입니다.");
+        }
+    }
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -278,17 +292,7 @@ public class MemberServiceImpl implements MemberService {
 
         Member member = optionalMember.get();
         
-        if (Member.MEMBER_STATUS_REQ.equals(member.getUserStatus())) {
-            throw new MemberNotEmailAuthException("이메일 활성화 이후에 로그인을 해주세요.");
-        }
-        
-        if (Member.MEMBER_STATUS_STOP.equals(member.getUserStatus())) {
-            throw new MemberStopUserException("정지된 회원 입니다.");
-        }
-    
-        if (Member.MEMBER_STATUS_WITHDRAW.equals(member.getUserStatus())) {
-            throw new MemberStopUserException("탈퇴된 회원 입니다.");
-        }
+        validate(member);
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
@@ -298,6 +302,23 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return new User(member.getUserId(), member.getPassword(), grantedAuthorities);
+    }
+
+    @Override
+    public boolean loggingLogInDt(String userId, LocalDateTime ldt) {
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+        if (!optionalMember.isPresent()) {
+            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        validate(member);
+
+        member.setLatestLogInDt(ldt);
+        memberRepository.save(member);
+
+        return true;
     }
 }
 

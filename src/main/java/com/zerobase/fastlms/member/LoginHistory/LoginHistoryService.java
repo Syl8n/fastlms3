@@ -12,10 +12,10 @@ public class LoginHistoryService {
 
     private final LoginHistoryRepository loginHistoryRepository;
 
-    public void logging(String id, String userAgent, String ip){
+    public void logging(String id, String userAgent, String ip, LocalDateTime ldt){
         loginHistoryRepository.save(LoginHistory.builder()
                 .loginId(id)
-                .loginDt(LocalDateTime.now())
+                .loginDt(ldt)
                 .userAgent(userAgent)
                 .ip(ip)
                 .build());

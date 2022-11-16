@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     UserAuthenticationSuccessHandler getSuccessHandler() {
-        return new UserAuthenticationSuccessHandler(loginHistoryService);
+        return new UserAuthenticationSuccessHandler(loginHistoryService, memberService);
     }
     
     @Override

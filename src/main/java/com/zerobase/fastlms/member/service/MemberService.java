@@ -7,6 +7,7 @@ import com.zerobase.fastlms.member.model.MemberInput;
 import com.zerobase.fastlms.member.model.ResetPasswordInput;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MemberService extends UserDetailsService {
@@ -58,4 +59,6 @@ public interface MemberService extends UserDetailsService {
      * 회원을 탈퇴시켜 주는 로직
      */
     ServiceResult withdraw(String userId, String password);
+
+    boolean loggingLogInDt(String userId, LocalDateTime ldt);
 }
