@@ -35,7 +35,7 @@
         <div class="bxslider">
             <div th:each="x : ${list}">
                 <a th:href="${x.imagePath}" th:target="${x.openMethod}">
-                    <img th:src="${x.urlFilename}">
+                    <img th:src="${x.urlFilename}" th:alt="${x.name}">
                 </a>
             </div>
         </div>
