@@ -3,11 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>메인 페이지</title>
+    <style>
+        .home__silder {
+            width: 60%;
+        }
+        .bxslider div a img{
+            margin: 0 auto;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        $(document).ready(function(){
+            $('.bxslider').bxSlider({
+                touchEnabled : (navigator.maxTouchPoints > 0),
+                auto: true,
+                autoHover: true,
+                pause: 3000
+            });
+        });
+        //]]>
+    </script>
 </head>
 <body>
     <h1>메인 페이지 </h1>
     <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
 
+    <div class="home__silder">
+        <div class="bxslider">
+            <div th:each="x : ${list}">
+                <a th:href="${x.imagePath}" th:target="${x.openMethod}">
+                    <img th:src="${x.urlFilename}">
+                </a>
+            </div>
+        </div>
+    </div>
 
 
 </body>

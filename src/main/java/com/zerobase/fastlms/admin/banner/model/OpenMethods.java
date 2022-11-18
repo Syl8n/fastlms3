@@ -16,8 +16,8 @@ public class OpenMethods {
 
     public static List<OpenMethods> init(){
         List<OpenMethods> list = new ArrayList<>();
-        list.add(new OpenMethods("self", "현재 창"));
-        list.add(new OpenMethods("blank", "새 창"));
+        list.add(new OpenMethods("_self", "현재 창"));
+        list.add(new OpenMethods("_blank", "새 창"));
         return list;
     }
 }
